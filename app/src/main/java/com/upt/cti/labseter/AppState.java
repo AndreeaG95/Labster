@@ -3,7 +3,6 @@ package com.upt.cti.labseter;
 import com.google.firebase.database.DatabaseReference;
 
 /**
- * Created by andreeagb on 12/8/2017.
  * This class is used for passing instances between activities.
  */
 

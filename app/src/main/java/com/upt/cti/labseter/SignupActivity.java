@@ -1,16 +1,19 @@
 package com.upt.cti.labseter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -33,11 +36,13 @@ public class SignupActivity extends Activity {
     private TextView tDetail;
     private EditText eEmail;
     private EditText ePass;
-    private ProgressBar pLoading;
+    private Button bLogin;
 
     // Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private static final int RC_SIGN_IN = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,13 @@ public class SignupActivity extends Activity {
         tDetail = (TextView) findViewById(R.id.tDetail);
         eEmail = (EditText) findViewById(R.id.eEmail);
         ePass = (EditText) findViewById(R.id.ePass);
+        bLogin = (Button)findViewById(R.id.bGoogle);
+
+        // Configure Google Sign In
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
 
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -83,7 +95,8 @@ public class SignupActivity extends Activity {
         }
     }
 
-    private void createAccount(String email, String password) {
+    // TODO(andreeagb): add here a create user form.
+    private void createAccount(final String email, final String password) {
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
             return;
@@ -96,17 +109,24 @@ public class SignupActivity extends Activity {
 
                         if (!task.isSuccessful())
                             Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-
                     }
                 });
     }
 
-    private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
-        if (!validateForm()) {
-            return;
-        }
+    /*
+    private void googleSignIn(){
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+    */
 
+    private boolean ok = true;
+    private boolean signIn(final String email, final String password) {
+        Log.d(TAG, "signIn:" + email);
+        ok = true;
+        if (!validateForm()) {
+            return false;
+        }
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -114,21 +134,21 @@ public class SignupActivity extends Activity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
-                        }
-
-                        if (!task.isSuccessful()) {
-                            tStatus.setText("Authentication failed");
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Toast.makeText(SignupActivity.this, "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                            updateUI(null);
                         }
                     }
                 });
-    }
-
-    private void signOut() {
-        mAuth.signOut();
-        updateUI(null);
+        return ok;
     }
 
     private boolean validateForm() {
@@ -160,14 +180,12 @@ public class SignupActivity extends Activity {
 
             findViewById(R.id.lSignIn).setVisibility(View.GONE);
             findViewById(R.id.email_password_fields).setVisibility(View.GONE);
-            findViewById(R.id.bSignOut).setVisibility(View.VISIBLE);
         } else {
             tStatus.setText("Signed out");
             tDetail.setText(null);
 
             findViewById(R.id.lSignIn).setVisibility(View.VISIBLE);
             findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
-            findViewById(R.id.bSignOut).setVisibility(View.GONE);
         }
     }
 
@@ -177,10 +195,13 @@ public class SignupActivity extends Activity {
                 createAccount(eEmail.getText().toString(), ePass.getText().toString());
                 break;
             case R.id.bSignIn:
-                signIn(eEmail.getText().toString(), ePass.getText().toString());
-                break;
-            case R.id.bSignOut:
-                signOut();
+                if (signIn(eEmail.getText().toString(), ePass.getText().toString())){
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("user", eEmail.getText().toString());
+                    intent.putExtra("pass", ePass.getText().toString());
+                    setResult(RESULT_OK);
+                    finish();
+                }
                 break;
         }
     }
