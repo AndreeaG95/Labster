@@ -35,20 +35,14 @@
             style="@style/ThemeOverlay.MyTextDetail"
             tools:hint="Firebase User ID: 123456789abc" />
 
-        <ProgressBar
-            android:id="@+id/pLoading"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:progressDrawable="@drawable/progress_bar" />
     </LinearLayout>
 
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="158dp"
+        android:layout_width="378dp"
+        android:layout_height="104dp"
+        android:layout_marginBottom="208dp"
         android:layout_weight="1"
         android:background="@color/grey_300"
         android:gravity="center_vertical"
