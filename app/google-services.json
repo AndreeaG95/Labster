@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "364333966010",
+    "firebase_url": "https://labster-22da2.firebaseio.com",
+    "project_id": "labster-22da2",
+    "storage_bucket": "labster-22da2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364333966010:android:e8b90eebb9950d25",
+        "android_client_info": {
+          "package_name": "com.upt.cti.labseter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364333966010-d00mt0pqvsqn570vj8fdjb68ec55t6c2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.upt.cti.labseter",
+            "certificate_hash": "6ba6dda91e51b97482ea5de932fb435318fe0a4e"
+          }
+        },
+        {
+          "client_id": "364333966010-8jr3kgvg0724bo2932rbjnsbh06g1kqd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCs-M-fa8t3QiRiTJ0PuChtQxxXa_ObZ4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364333966010-8jr3kgvg0724bo2932rbjnsbh06g1kqd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
