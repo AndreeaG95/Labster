@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,6 +49,11 @@ public class SignupActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.signup_activity);
 
         // views
@@ -54,7 +61,7 @@ public class SignupActivity extends Activity {
         tDetail = (TextView) findViewById(R.id.tDetail);
         eEmail = (EditText) findViewById(R.id.eEmail);
         ePass = (EditText) findViewById(R.id.ePass);
-        bLogin = (Button)findViewById(R.id.bGoogle);
+        //bLogin = (Button)findViewById(R.id.bGoogle);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
