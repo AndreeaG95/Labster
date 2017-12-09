@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@mipmap/background">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:layout_weight="3"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
         app:layout_constraintEnd_toEndOf="@+id/relativeLayout"
         app:layout_constraintStart_toStartOf="@+id/relativeLayout"
         app:layout_constraintTop_toTopOf="parent">
-
         <ImageView
             android:id="@+id/icon"
             style="@style/ThemeOverlay.FirebaseIcon"
@@ -41,10 +40,10 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="378dp"
-        android:layout_height="104dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
         android:layout_marginBottom="208dp"
         android:layout_weight="1"
-        android:background="@color/grey_300"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -62,41 +61,67 @@
                 android:id="@+id/eEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/bSignIn"
                 android:layout_weight="1"
                 android:hint="Email address"
                 android:inputType="textEmailAddress" />
-
-            <EditText
-                android:id="@+id/ePass"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="******"
-                android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/lSignIn"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/email_password_fields"
+            android:layout_centerInParent="true"
             android:orientation="horizontal"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
             <Button
                 android:id="@+id/bSignIn"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/roundbutton"
                 android:onClick="clicked"
                 android:text="Sign in" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/password_fields"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lSignIn"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
+
+            <EditText
+                android:id="@+id/ePass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bSignIn"
+                android:layout_weight="1"
+                android:hint="******"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/password_fields"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <Button
                 android:id="@+id/bRegister"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@drawable/roundbutton"
                 android:onClick="clicked"
                 android:text="Register" />
         </LinearLayout>
